@@ -7,10 +7,16 @@ import time
 import re
 import glob
 
-from xgboost import XGBClassifier
-from sklearn.cross_validation import cross_val_score, train_test_split, KFold
-from sklearn.metrics import accuracy_score, f1_score, precision_score, roc_curve, roc_auc_score, confusion_matrix
-from sklearn.grid_search import GridSearchCV
+def float_check(values, thresh):
+    '''Checks to see if value type can be a number or not'''
+    count = 0
+    for i in values:
+        try:
+            float(i)
+            count +=1
+        except:
+            pass
+    return float(count)/len(values) > thresh
 
 def pr_curve(truthvec, scorevec, name, digit_prec=2):
     threshvec = np.unique(np.round(scorevec,digit_prec))
